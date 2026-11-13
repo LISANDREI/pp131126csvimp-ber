@@ -1,0 +1,4 @@
+﻿sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,warranty_months,model_number
+2001,Смартфон Xiaomi Redmi Note 12,Бюджетный смартфон с большим экраном,15990,RUB,Телефоны,20,/images/xiaomi.jpg,true,Xiaomi,12,RedmiNote12
+2002,Наушники Sony WH-1000XM5,Беспроводные наушники с шумоподавлением,32990,RUB,Аудио,8,/images/sony.jpg,true,Sony,24,WH1000XM5
+2003,Планшет Samsung Galaxy Tab S8,Планшет для работы и развлечений,54990,RUB,Планшеты,5,/images/samsung.jpg,true,Samsung,24,TabS8
