@@ -1,0 +1,111 @@
+﻿@model ProductsIndexViewModel
+@{
+    ViewData["Title"] = "Список товаров";
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>Список товаров</h1>
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="badge bg-secondary">Всего товаров: @Model.TotalCount</span>
+                    <span class="badge bg-secondary ms-2">Общая стоимость: @Model.TotalValue.ToString("N0") RUB</span>
+                </div>
+                <a asp-action="Import" class="btn btn-primary">Импортировать товары</a>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Products.Count == 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <p class="mb-0">Товары еще не импортированы.</p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Product Cards Grid -->
+        <div class="row g-3">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card h-100 @(product.IsActive ? "" : "border-secondary")">
+                        <!-- Product Image -->
+                        <div style="height: 180px; background: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="@product.ImageUrl" 
+                                     alt="@product.Name"
+                                     style="max-width: 100%; max-height: 100%; object-fit: contain; padding: 15px;">
+                            }
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Brand & Category -->
+                            <div class="text-muted small mb-2">
+                                <strong>@product.Brand</strong> | @product.CategoryName
+                            </div>
+
+                            <!-- Product Name -->
+                            <h6 class="card-title">@product.Name</h6>
+
+                            <!-- Description -->
+                            @if (!string.IsNullOrEmpty(product.Description))
+                            {
+                                <p class="card-text small text-muted mb-3" style="height: 40px; overflow: hidden;">
+                                    @(product.Description.Length > 80 ? product.Description.Substring(0, 80) + "..." : product.Description)
+                                </p>
+                            }
+
+                            <!-- Price & Stock -->
+                            <div class="mb-2">
+                                <h5 class="text-primary mb-1">@product.Price.ToString("N0") RUB</h5>
+                                <small class="text-muted">В наличии: @product.StockQuantity шт</small>
+                            </div>
+
+                            <!-- Details -->
+                            <div class="border-top pt-2 small">
+                                <div class="row">
+                                    <div class="col-6 text-muted">Артикул:</div>
+                                    <div class="col-6 text-end">@product.Sku</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 text-muted">Модель:</div>
+                                    <div class="col-6 text-end">@product.ModelNumber</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 text-muted">Гарантия:</div>
+                                    <div class="col-6 text-end">@product.WarrantyMonths мес.</div>
+                                </div>
+                                @if (!product.IsActive)
+                                {
+                                    <div class="row mt-1">
+                                        <div class="col-12">
+                                            <span class="badge bg-secondary w-100">Неактивен</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .card {
+        transition: box-shadow 0.2s;
+    }
+    
+    .card:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+</style>
